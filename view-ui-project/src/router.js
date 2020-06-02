@@ -13,6 +13,13 @@ const routers = [
                 title: ''
             },
             component: (resolve) => require(['./views/table.vue'], resolve)
-        }
+        },
+                {
+                    path: '/charts',
+                    meta: {
+                        title: ''
+                    },
+                    component: (resolve) => require(['./views/charts.vue'], resolve)
+                }
 ];
 export default routers;
