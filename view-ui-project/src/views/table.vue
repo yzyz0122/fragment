@@ -15,8 +15,8 @@
         </div>
         <div class="section-content reportTable">
           <Table size="small" :columns="columns11" :data="overviewData" :span-method="handleSpan" border>
-                  <template v-for="(item,key) in slotList" slot-scope="{ row }" :slot="item">
-                      <span>
+                  <template v-for="item in slotList" slot-scope="{ row }" :slot="item">
+                      <span :key="item">
                           <span>{{ row[item].val }}</span>
                           <span :class="'percent ' +   row[item].trend">{{ row[item].percent }}</span>
                       </span>
@@ -331,7 +331,7 @@ export default {
     };
 
     for (let i = 1; i <= 5; i++) {
-      let temp = that.$util.deepCopy(item);
+      let temp = that.deepCopy(item);
       temp.title = temp.title + i;
       temp.children[0].key = "value_curr_" + i;
       temp.children[1].key = "value_base_" + i;
@@ -373,6 +373,21 @@ export default {
 
   },
   methods: {
+      deepCopy(obj){
+        var objArray = Array.isArray(obj) ? [] : {};
+        if (obj && typeof obj === "object") {
+            for (let key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    if (obj[key] && typeof obj[key] === "object") {
+                        objArray[key] = this.deepCopy(obj[key]);
+                    } else {
+                        objArray[key] = obj[key];
+                    }
+                }
+            }
+        }
+        return objArray;
+},
     randomNum(minNum, maxNum) {
       switch (arguments.length) {
         case 1:
